@@ -28,14 +28,14 @@ REST API's for a ticketing system developed using Node JS v16.11.0</br>
   1. Clone this repo and install node and mysql in your system </br>
   2. Run "npm install" to install all the dependancies. </br>
   3. Create database, execute the schema.sql and update credentails in config/database.js </br>
-  4. Mention port in app.js</br>
-  5. Run node app.js </br>
+  4. Mention port in server.js</br>
+  5. Run node server.js </br>
 
   Your app will be running on now
   
    Please let me know for issues or area of concern
   
-   ###### Thanks. For Lazarus.
+   ##### Thanks. For Lazarus.
 
  
  
