@@ -1,0 +1,31 @@
+{
+  "name": "ticketing-system-back",
+  "version": "1.0.0",
+  "description": "A ticketing system developed in Node JS and MySQL for the database.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "build": "nodemon server.js",
+    "ngrok": "ngrok http 5000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lazarusmwangim/Ticketing-System-Node-JS.git"
+  },
+  "author": "Lazarus M Mwangi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lazarusmwangim/Ticketing-System-Node-JS/issues"
+  },
+  "homepage": "https://github.com/lazarusmwangim/Ticketing-System-Node-JS#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-mysql-session": "^2.1.8",
+    "express-session": "^1.17.3",
+    "nodemon": "^2.0.19"
+  }
+}
