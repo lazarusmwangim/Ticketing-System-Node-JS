@@ -1,7 +1,5 @@
 # Ticketing-System-Node-JS
-
-# Ticketing System in Node JS and MySQL
-A ticketing system developed in Node JS
+A ticketing system developed in Node JS and MySQL 
 
 REST API's for a ticketing system developed using Node JS v16.11.0</br>
 
