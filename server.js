@@ -4,13 +4,14 @@ require('dotenv').config();
 var express = require("express");
 var app = express();
 const routes = require('./routes');
-const router = express.Router();
-const cookieParser = require("cookie-parser");
 const session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 const mysql = require('mysql');
-//const db = require('./db');
-var path = require("path");
+
+var { graphqlHTTP } = require('express-graphql');
+var { buildSchema, GraphQLScalarType } = require('graphql');
+
+
 
 // Force SSL, redirect http to https
 if (process.env.NODE_ENV === "production") {
@@ -30,31 +31,31 @@ function onHttpStart() {
 }
 
 app.use(function (req, res, next) {
-    res.header('Content-Type', 'application/json');
-    next();
+  res.header('Content-Type', 'application/json');
+  next();
 });
 
 // checking if the user is authenticated
 function ensureLogin(req, res, next) {
-	if (!req.session.user) {
-		res.redirect("/");
-	} else {
-		next();
+  if (!req.session.user) {
+    res.redirect("/");
+  } else {
+    next();
   }
 }
 
 var options = {
-	host: process.env.DB_HOST,
-	port: process.env.DB_PORT,
-	user: process.env.DB_USER,
-	password: process.env.DB_PASSWORD,
-	database: process.env.DB_NAME,
-	createDatabaseTable: true
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  createDatabaseTable: true
 };
 
 const pool = mysql.createPool(options);
- 
-const  sessionStore = new MySQLStore(options, pool);
+
+const sessionStore = new MySQLStore(options, pool);
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -70,7 +71,7 @@ app.use(session({
   secret: "a",
   cookie: {
     httpOnly: true,
-    maxAge: 100 * 60 * 1000, // 1 minute
+    maxAge: 100 * 60 * 1000, // 100 minute
     sameSite: true,
     secure: IN_PROD
   },
@@ -90,16 +91,123 @@ app.use(function (req, res, next) {
 // Parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
 
-app.use(function(req, res, next) {
-	res.locals.session = req.session;
-	next();
+app.use(function (req, res, next) {
+  res.locals.session = req.session;
+  next();
 });
+
+// graphql read
+app.use((req, res, next) => {
+  req.mysqlDb = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+  });
+  req.mysqlDb.connect();
+  next();
+});
+
+const resolverMap = {
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value); // value from the client
+    },
+    serialize(value) {
+      return value.getTime(); // value sent to the client
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return parseInt(ast.value, 10); // ast value is always in string format
+      }
+      return null;
+    },
+  })
+};
+
+// Construct a schema, using GraphQL schema language
+/* var schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
+
+// The root provides a resolver function for each API endpoint
+var root = {
+  hello: () => {
+    return 'Hello world!';
+  },
+}; */
+
+// 
+var schema = buildSchema(`
+scalar Date
+type Ticket{
+  ticket_id: Int
+  event_id: Int
+  category: String
+  desc: String
+  price: String
+  reserved: String
+  expiry: Date
+  createdon: String
+  update_date: String
+}
+type Event{
+  id: Int
+  name: String
+  venue: String
+  desc: String
+  organiser: String
+  capacity: Int
+  celebs: String
+  offers: String
+  eventdate: Date
+  createddate: Date
+  update_date: Date
+}
+  type Query {
+    hello: String
+    getTickets: [Ticket],
+    getTicketDetails(ticket_id: Int): Ticket,
+    getEvents: [Event],
+    getEventDetails(id: Int): Event
+  }
+`);
+
+
+const queryDB = (req, sql, args) => new Promise((resolve, reject) => {
+  req.mysqlDb.query(sql, args, (err, rows) => {
+    if (err)
+      return reject(err);
+    rows.changedRows || rows.affectedRows || rows.insertId ? resolve(true) : resolve(rows);
+  });
+});
+
+
+var root = {
+  hello: () => {
+    return 'Hello Ticketing system!';
+  },
+  getTickets: (args, req) => queryDB(req, "SELECT * FROM `tickets`").then(data => data),
+  getTicketDetails: (args, req) => queryDB(req, "SELECT * FROM `tickets` WHERE `ticket_id` = ?", [args.ticket_id]).then(data => data[0]),
+  getEvents: (args, req) => queryDB(req, "SELECT * FROM `events`").then(data => data),
+  getEventDetails: (args, req) => queryDB(req, "SELECT * FROM `events` WHERE `id` = ?", [args.id]).then(data => data[0]),
+};
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
 
 app.use('/', routes);
 
 //handle not found pages
 app.use((req, res) => {
-  res.end(JSON.stringify({"status":405, "message":"Page not found"}));
+  res.end(JSON.stringify({ "status": 405, "message": "Page not found" }));
 });
 // setup http server to listen on HTTP_PORT but after data is loaded
 app.listen(HTTP_PORT, onHttpStart);

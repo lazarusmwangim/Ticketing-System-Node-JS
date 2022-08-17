@@ -1,0 +1,45 @@
+{
+  getTickets {
+    ticket_id
+    event_id
+    category
+    desc
+    price
+    reserved
+    expiry
+    createdon
+    update_date
+  }
+  getTicketDetails(ticket_id: 1) {
+    ticket_id
+    category
+    desc
+    price
+  }
+  getEvents {
+    id
+    name
+    venue
+    desc
+    organiser
+    capacity
+    celebs
+    offers
+    eventdate
+    createddate
+    update_date
+  }
+  getEventDetails(id:4){
+    id
+    name
+    venue
+    desc
+    organiser
+    capacity
+    celebs
+    offers
+    eventdate
+    createddate
+    update_date
+  }
+}

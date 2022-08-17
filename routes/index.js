@@ -1,5 +1,26 @@
 
 const router = require('express').Router();
+
+/* const graphqlHTTP = require('express-graphql')
+const graphql = require('graphql')
+
+const QueryRoot = new graphql.GraphQLObjectType({
+	name: 'Query',
+	fields: () => ({
+		hello: {
+			type: graphql.GraphQLString,
+			resolve: () => "Hello world!"
+		}
+	})
+})
+
+const schema = new graphql.GraphQLSchema({ query: QueryRoot });
+
+router.use('/api', graphqlHTTP({
+	schema: schema,
+	graphiql: true,
+})); */
+
 let users = require('../controllers/users_controller.js');
 let events = require('../controllers/events_controller.js');
 let tickets = require('../controllers/tickets_controller.js');
@@ -45,7 +66,7 @@ router.post('/add/event', function (req, res) {
 	}
 
 
-	
+
 });
 
 router.post('/update/event', function (req, res) {
@@ -75,12 +96,12 @@ router.post('/update/event', function (req, res) {
 			"message": "Login to continue."
 		};
 		res.json(out);
-	}	
+	}
 });
 
 //fetch events
 router.get("/events", function (req, res) {
-	console.log("Session variables: " + req.session.user);// session auth token for the logged in user
+	//console.log("Session variables: " + req.session.user);// session auth token for the logged in user
 	var eventsContoller = events(res);
 
 	if (req.session.user) {
@@ -93,7 +114,7 @@ router.get("/events", function (req, res) {
 			"message": "Login to continue."
 		};
 		res.json(out);
-	}	
+	}
 });
 
 
@@ -124,7 +145,24 @@ router.post('/add/ticket', function (req, res) {
 			"message": "Login to continue."
 		};
 		res.json(out);
-	}	
+	}
+});
+
+//fetch tickets
+router.get("/tickets", function (req, res) {
+	var ticketsContoller = tickets(res);
+
+	if (req.session.user) {
+		ticketsContoller.loadTickets(req.headers.api_key);
+	}
+	else {
+		var out = {
+			"status": 401,
+			"success": false,
+			"message": "Login to continue."
+		};
+		res.json(out);
+	}
 });
 
 // EVent Managers
@@ -156,7 +194,7 @@ router.post("/add/event_manager", function (req, res) {
 			"message": "Login to continue."
 		};
 		res.json(out);
-	}	
+	}
 });
 
 //login user

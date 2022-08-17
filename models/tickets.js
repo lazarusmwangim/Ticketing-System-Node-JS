@@ -22,7 +22,7 @@ module.exports = {
   },
   update_ticket: function (data, callback) {
     // You can only update capacity
-    var sql = "UPDATE `events` SET `capacity` = ? WHERE `id` = ?";
+    var sql = "UPDATE `tickets` SET `capacity` = ? WHERE `id` = ?";
     var values = [data.capacity, data.id];
     db.query(sql, values, function (error, result) {
       //console.log("Update events called");  
