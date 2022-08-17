@@ -36,6 +36,9 @@ REST API's for a ticketing system developed using Node JS v16.11.0</br>
 ## NB
 All the Event Managers operations require that they must be logged into the system.</br>
 To use, test or consume the API's you need to provide the authentication key in your headers.</br>
+
+To run the graphql endpoints, {base_url}/graphql</br>
+Then Copy the query content in the GraphQL.txt file..
   
    Please let me know for issues or area of concern
   
