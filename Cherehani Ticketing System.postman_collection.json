@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "f06d14a8-e7c4-4dc8-a29b-15f95b8bf40b",
+		"name": "Cherehani Ticketing System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10639033"
+	},
+	"item": [
+		{
+			"name": "update/event",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "a",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 7,\r\n    \"name\": \"First Last\",\r\n    \"venue\": \"Serena H\",\r\n    \"description\": \"Graduation party celebration\",\r\n    \"organiser\": \"Lazarus\",\r\n    \"capacity\": 100,\r\n    \"celebs\": \"The One, Chosen Two\",\r\n    \"offers\": \"Come one come all\",\r\n    \"eventDateTime\": \"2022-08-16 18:03:41\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/update/event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"update",
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add/event",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Mugithi Fest\",\r\n    \"venue\": \"Greenspot, Eastern Bypass\",\r\n    \"description\": \"Samidoh live performance test event ticketing\",\r\n    \"organiser\": \"Lazarus\",\r\n    \"capacity\": 100,\r\n    \"celebs\": \"Samidoh, Gathee wa Njeri, Firinda\",\r\n    \"offers\": \"Buy 3 beers, get 1 free\",\r\n    \"eventDateTime\": \"2022-08-18 17:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/add/event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"add",
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "home",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ticket_id\": 1,\r\n    \"event_id\": 3,\r\n    \"category\": \"Single\",\r\n    \"description\": \"Graduation party celebration. Ticket for 1 person\",\r\n    \"price\": 350.00,\r\n    \"reserved\": 0,\r\n    \"expiry\": \"2022-08-19 18:00:00\",\r\n    \"created_on\": \"2022-08-16 08:03:41\",\r\n    \"update_date\": \"2022-08-16 08:03:41\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add/ticket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ticket_id\": 1,\r\n    \"event_id\": 3,\r\n    \"category\": \"Single\",\r\n    \"description\": \"Graduation party celebration. Ticket for 1 person\",\r\n    \"price\": 350.00,\r\n    \"reserved\": 0,\r\n    \"expiry\": \"2022-08-19 18:00:00\",\r\n    \"created_on\": \"2022-08-16 08:03:41\",\r\n    \"update_date\": \"2022-08-16 08:03:41\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/add/ticket",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"add",
+						"ticket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add/event_manager",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"swan\",\r\n    \"phone\": \"+254705934323\",\r\n    \"f_name\": \"Test\",\r\n    \"m_name\": \"First\",\r\n    \"l_name\": \"User\",\r\n    \"email\": \"swan@tickets.net\",\r\n    \"password\": \"admin\",\r\n    \"created_on\": \"2022-08-16 08:03:41\",\r\n    \"update_date\": \"2022-08-16 08:03:41\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/add/event_manager",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"add",
+						"event_manager"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login/event_manager",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"swan\",\r\n    \"phone\": \"+254705934323\",\r\n    \"f_name\": \"Test\",\r\n    \"m_name\": \"First\",\r\n    \"l_name\": \"User\",\r\n    \"email\": \"swan@tickets.net\",\r\n    \"password\": \"admin\",\r\n    \"created_on\": \"2022-08-16 08:03:41\",\r\n    \"update_date\": \"2022-08-16 08:03:41\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "events",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"swan\",\r\n    \"phone\": \"+254705934323\",\r\n    \"f_name\": \"Test\",\r\n    \"m_name\": \"First\",\r\n    \"l_name\": \"User\",\r\n    \"email\": \"swan@tickets.net\",\r\n    \"password\": \"admin\",\r\n    \"created_on\": \"2022-08-16 08:03:41\",\r\n    \"update_date\": \"2022-08-16 08:03:41\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "a",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "api_key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

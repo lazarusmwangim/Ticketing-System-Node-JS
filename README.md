@@ -20,7 +20,7 @@ REST API's for a ticketing system developed using Node JS v16.11.0</br>
 
  # DEMO
    
-   Test all your api at [Live Ticketing System URL](https://lazarus-mwangi.herokuapp.com/)
+   Test all your api at [Live Ticketing System URL](https://lazarus-mwangi.herokuapp.com/)</br>
    GraphQL ... 
    
   # APP USE
@@ -32,6 +32,10 @@ REST API's for a ticketing system developed using Node JS v16.11.0</br>
   5. Run node server.js </br>
 
   Your app will be running on now
+
+## NB
+All the Event Managers operations require that they must be logged into the system.</br>
+To use, test or consume the API's you need to provide the authentication key in your headers.</br>
   
    Please let me know for issues or area of concern
   

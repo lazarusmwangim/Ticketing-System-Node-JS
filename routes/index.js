@@ -32,6 +32,7 @@ router.post('/add/event', function (req, res) {
 	let postData = req.body;
 
 	if (req.session.user) {
+		postData.organiser = req.session.user;
 		eventsContoller.addEvent(postData, req.headers.api_key);
 	}
 	else {
