@@ -1,29 +1,10 @@
 
 const router = require('express').Router();
 
-/* const graphqlHTTP = require('express-graphql')
-const graphql = require('graphql')
-
-const QueryRoot = new graphql.GraphQLObjectType({
-	name: 'Query',
-	fields: () => ({
-		hello: {
-			type: graphql.GraphQLString,
-			resolve: () => "Hello world!"
-		}
-	})
-})
-
-const schema = new graphql.GraphQLSchema({ query: QueryRoot });
-
-router.use('/api', graphqlHTTP({
-	schema: schema,
-	graphiql: true,
-})); */
-
 let users = require('../controllers/users_controller.js');
 let events = require('../controllers/events_controller.js');
 let tickets = require('../controllers/tickets_controller.js');
+let attendees = require('../controllers/attendees_controller.js');
 
 router.get('/', function (req, res) {
 	var out = {
@@ -146,6 +127,23 @@ router.post('/add/ticket', function (req, res) {
 		};
 		res.json(out);
 	}
+});
+
+// purchase ticket
+router.post('/purchase/ticket', function (req, res) {
+	var x = {
+		"ticket_id": 3,
+		"event_id": 3,
+		"category": "Single",
+		"price": 350,
+		"name": "Attender Person",
+		"phone": "+254705934323"
+	}
+	console.log(req.body);
+	var attendeesContoller = attendees(res);
+	let postData = req.body;
+
+	attendeesContoller.purchaseTicket(postData, req.headers.api_key);
 });
 
 //fetch tickets

@@ -42,4 +42,17 @@
     createddate
     update_date
   }
+  getAttendeeTicket(phone:"+254705934323", ticket_id:3) {
+    attendee_name
+    transaction_id
+    phone
+    category
+    name
+    venue
+    desc
+    organiser
+    eventdate
+    celebs
+    offers
+  }
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 17, 2022 at 08:55 AM
+-- Generation Time: Aug 17, 2022 at 05:40 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.4.0beta2-dev
 
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `event_managers` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `phone` (`phone`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1111116 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1111114 ;
 
 --
 -- Dumping data for table `event_managers`
@@ -107,6 +107,30 @@ CREATE TABLE IF NOT EXISTS `event_managers` (
 
 INSERT INTO `event_managers` (`id`, `username`, `phone`, `f_name`, `m_name`, `l_name`, `email`, `password`, `auth_token`, `create_date`, `update_date`) VALUES
 (1111113, 'swan', '+254705934323', 'Test', 'First', 'User', 'swan@tickets.net', '$2b$10$iJpKl/NiZbDY9g3ebJM4uOyut7isyKBChr8N6gA/kXXZCBKVugP.6', 'zpTBgb&A0wB4CLZF9XvL9HAD2EkXDON3', '2022-08-17 10:58:14', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE IF NOT EXISTS `payments` (
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `transaction_id` varchar(20) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`payment_id`),
+  UNIQUE KEY `transaction_id` (`transaction_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`payment_id`, `transaction_id`, `phone`, `amount`, `date`) VALUES
+(1, 'MPESA12345', '+254705934323', 350, '2022-08-17 19:37:43'),
+(6, 'MPESA123456', '+254705934323', 350, '2022-08-17 19:48:25');
 
 -- --------------------------------------------------------
 
@@ -120,13 +144,6 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `sessions`
---
-
-INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('U1WaY5J047H_E4lBXYGpJ2Kke2WOde_J', 1660732211, '{"cookie":{"originalMaxAge":6000000,"expires":"2022-08-17T10:20:24.172Z","secure":false,"httpOnly":true,"path":"/","sameSite":true},"user":"zpTBgb&A0wB4CLZF9XvL9HAD2EkXDON3"}');
 
 -- --------------------------------------------------------
 
@@ -156,6 +173,32 @@ INSERT INTO `tickets` (`ticket_id`, `event_id`, `category`, `desc`, `price`, `re
 (2, 3, 'Couple', 'Graduation party celebration. Ticket for 1 person', 500, 0, '2022-08-19 18:00:00', '2022-08-17 10:20:45', '2022-08-16 05:03:41'),
 (3, 3, 'Mbogi', 'Graduation party celebration. Ticket for a group of 10 persons max.', 2000, 0, '2022-08-19 18:00:00', '2022-08-17 10:21:22', '2022-08-16 05:03:41'),
 (4, 3, 'VIP', 'Graduation party celebration. Ticket for 1 person in the VIP', 1000, 0, '2022-08-19 18:00:00', '2022-08-17 10:21:48', '2022-08-16 05:03:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket_details`
+--
+
+CREATE TABLE IF NOT EXISTS `ticket_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attendee_name` varchar(100) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `ticket_id` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `transaction_id` varchar(20) NOT NULL,
+  `purchase_date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `transaction_id` (`transaction_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `ticket_details`
+--
+
+INSERT INTO `ticket_details` (`id`, `attendee_name`, `phone`, `ticket_id`, `amount`, `transaction_id`, `purchase_date`) VALUES
+(1, 'Attender Person', '+254705934323', 3, 350, '0', '2022-08-17 19:37:43'),
+(2, 'Attender Person', '+254705934323', 3, 350, 'MPESA123456', '2022-08-17 19:48:25');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

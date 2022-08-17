@@ -168,12 +168,26 @@ type Event{
   createddate: Date
   update_date: Date
 }
+type Attendee{
+  attendee_name: String
+  transaction_id: String
+  phone: String
+  category: String
+  name: String
+  venue: String
+  desc: String
+  organiser: String
+  eventdate: Date
+  celebs: String
+  offers: String
+}
   type Query {
     hello: String
     getTickets: [Ticket],
     getTicketDetails(ticket_id: Int): Ticket,
     getEvents: [Event],
-    getEventDetails(id: Int): Event
+    getEventDetails(id: Int): Event,
+    getAttendeeTicket(phone: String, ticket_id: Int): Attendee
   }
 `);
 
@@ -186,7 +200,7 @@ const queryDB = (req, sql, args) => new Promise((resolve, reject) => {
   });
 });
 
-
+var sql = "SELECT e.`name`, e.`desc`, e.`organiser`, e.`eventdate`, e.`celebs`, td.`attendee_name`, td.`amount`, td.`phone`, td.`transaction_id`, td.`purchase_date`, t.`category`, t.`expiry` FROM `events` e, `ticket_details` td, `tickets` t WHERE t.`event_id` = e.`id` AND td.`ticket_id` = t.`ticket_id` AND td.`phone` = ?";
 var root = {
   hello: () => {
     return 'Hello Ticketing system!';
@@ -195,6 +209,7 @@ var root = {
   getTicketDetails: (args, req) => queryDB(req, "SELECT * FROM `tickets` WHERE `ticket_id` = ?", [args.ticket_id]).then(data => data[0]),
   getEvents: (args, req) => queryDB(req, "SELECT * FROM `events`").then(data => data),
   getEventDetails: (args, req) => queryDB(req, "SELECT * FROM `events` WHERE `id` = ?", [args.id]).then(data => data[0]),
+  getAttendeeTicket: (args, req) => queryDB(req, "SELECT e.`name`, e.`desc`, e.`organiser`, e.`eventdate`, e.`celebs`, e.`offers`, td.`attendee_name`, td.`amount`, td.`phone`, td.`transaction_id`, td.`purchase_date`, t.`category`, t.`expiry` FROM `events` e, `ticket_details` td, `tickets` t WHERE t.`event_id` = e.`id` AND td.`ticket_id` = t.`ticket_id` AND td.`phone` = ? AND td.`ticket_id` = ?", [args.phone, args.ticket_id]).then(data => data[0]),
 };
 
 app.use('/graphql', graphqlHTTP({
