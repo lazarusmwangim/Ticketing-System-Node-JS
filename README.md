@@ -38,7 +38,9 @@ All the Event Managers operations require that they must be logged into the syst
 To use, test or consume the API's you need to provide the authentication key in your headers.</br>
 
 To run the graphql endpoints, {base_url}/graphql</br>
-Then Copy the query content in the GraphQL.txt file..
+Then Copy the query content in the GraphQL.txt file.. </br>
+
+Testing the REST API's for write and update, import the postman_collection.json file to postman and test each endpoint.</br>
   
    Please let me know for issues or area of concern
   
